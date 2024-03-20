@@ -10,7 +10,7 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 
 conn = st.connection('gsheetsMT', type=GSheetsConnection)
 
-df = conn.read(worksheet="0")
+df = conn.read(worksheet="Sheet1")
 #-----
 
 st.title('Management Trainee')
