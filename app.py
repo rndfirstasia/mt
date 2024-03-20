@@ -37,7 +37,7 @@ def func(pct, allvalues):
     absolute = int(pct/100.*np.sum(allvalues))
     return "{:.1f}%\n({:d})".format(pct, absolute)
 
-plt.figure(figsize=(8, 6))
+plt.figure(figsize=(6, 4))
 plt.pie(distribusi, labels=distribusi.index, autopct=lambda pct: func(pct, distribusi), startangle=140)
 st.pyplot(plt)
 
