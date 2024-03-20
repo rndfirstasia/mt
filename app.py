@@ -6,6 +6,7 @@ from streamlit_gsheets import GSheetsConnection
 
 # CORE
 #df = pd.read_excel('data.xlsx')
+st.set_page_config(page_title="Management Trainee Profile", page_icon="icon.png")
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 conn = st.connection("gsheets", type=GSheetsConnection)
