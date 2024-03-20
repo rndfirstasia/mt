@@ -37,8 +37,12 @@ def func(pct, allvalues):
     absolute = int(pct/100.*np.sum(allvalues))
     return "{:.1f}%\n({:d})".format(pct, absolute)
 
-plt.figure(figsize=(6, 4))
-plt.pie(distribusi, labels=distribusi.index, autopct=lambda pct: func(pct, distribusi), startangle=140)
+colors = sns.color_palette('Blues', len(distribusi))
+plt.figure(figsize=(10, 6))
+plt.pie(distribusi, labels=distribusi.index, colors=colors, autopct=lambda pct: func(pct, distribusi), startangle=140)
+
+plt.rcParams.update({'font.size': 12})
+
 st.pyplot(plt)
 
 st.subheader('STAGE Distribution')
