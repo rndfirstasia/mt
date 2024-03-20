@@ -38,10 +38,7 @@ def func(pct, allvalues):
     return "{:.1f}%\n({:d})".format(pct, absolute)
 
 plt.figure(figsize=(8, 6))
-plt.pie(distribusi, labels=distribusi.index, colors=sns.color_palette('pastel'), autopct=lambda pct: func(pct, distribusi), startangle=140)
-
-plt.title('Distribusi Jenis Kelamin')
-plt.tight_layout()
+plt.pie(distribusi, labels=distribusi.index, autopct=lambda pct: func(pct, distribusi), startangle=140)
 st.pyplot(plt)
 
 st.subheader('STAGE Distribution')
