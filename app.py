@@ -8,9 +8,10 @@ from streamlit_gsheets import GSheetsConnection
 #df = pd.read_excel('data.xlsx')
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
-conn = st.connection('gsheetsMT', type=GSheetsConnection)
+conn = st.connection("gsheets", type=GSheetsConnection)
 
-df = conn.read(worksheet="Sheet1")
+url = "https://docs.google.com/spreadsheets/d/1Rd__ozy2kEuNRJImq_wciBRBGKnCWSoP53fqD3I6dB8/edit#gid=0"
+df = conn.read(spreadsheet=url, worksheet="0")
 #-----
 
 st.title('Management Trainee')
