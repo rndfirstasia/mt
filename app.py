@@ -1,4 +1,5 @@
 import streamlit as st
+import numpy as np
 import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -15,7 +16,39 @@ url = "https://docs.google.com/spreadsheets/d/1Rd__ozy2kEuNRJImq_wciBRBGKnCWSoP5
 df = conn.read(spreadsheet=url, worksheet="0")
 #-----
 
+#Sidebar
+st.sidebar.title('Filter')
+
+bins= [0,29,44,64,80, np.inf]
+labels_umur = ['Gen Z', 'Milenials', 'Gen X', 'Baby Boomer', 'Silent']
+df['generasi'] = pd.cut(df['UMUR'], bins=bins, labels=labels_umur, right=False)
+#Filter generasi
+selected_generations = st.sidebar.multiselect('Pilih Generasi', labels_umur, default=labels_umur)
+df = df[df[''].isin(selected_generations)]
+#Filter Job Family
+labels_fmly = ['L', 'P']
+selected_jobfam = st.sidebar.multiselect('Jenis Kelamin', labels_fmly, default=labels_fmly)
+df = df[df['J/K'].isin(selected_jobfam)]
+#Filter
+labels_mng = ['DANAMON', 'PT. Bela Parahiyangan Investindo', 'PT. Mitra Akademi Perkasa (MAP Group)', 'PT. Quadra Dinamika Internasional', 'PT. Satya Djaya Raya Trading Coy', 'PT. Satya Langgeng Sentosa', 'Solusi Bangun Indonesia, PT.']
+selected_managerial = st.sidebar.multiselect('Klien', labels_mng, default=labels_mng)
+df = df[df['KLIEN'].isin(selected_managerial)]
+
 st.title('Management Trainee')
+
+st.subheader('Jenis Kelamin')
+distribusi = df['J/K'].value_counts().rename(index={'L': 'Laki-laki', 'P': 'Perempuan'})
+
+def func(pct, allvalues):
+    absolute = int(pct/100.*np.sum(allvalues))
+    return "{:.1f}%\n({:d})".format(pct, absolute)
+
+plt.figure(figsize=(8, 6))
+plt.pie(distribusi, labels=distribusi.index, colors=sns.color_palette('pastel'), autopct=lambda pct: func(pct, distribusi), startangle=140)
+
+plt.title('Distribusi Jenis Kelamin')
+plt.tight_layout()
+st.pyplot(plt)
 
 st.subheader('STAGE Distribution')
 data_stage = df [['S','T','A','G','E']]
