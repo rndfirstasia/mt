@@ -19,12 +19,6 @@ df = conn.read(spreadsheet=url, worksheet="0")
 #Sidebar
 st.sidebar.title('Filter')
 
-bins= [0,29,44,64,80, np.inf]
-labels_umur = ['Gen Z', 'Milenials', 'Gen X', 'Baby Boomer', 'Silent']
-df['generasi'] = pd.cut(df['UMUR'], bins=bins, labels=labels_umur, right=False)
-#Filter generasi
-selected_generations = st.sidebar.multiselect('Pilih Generasi', labels_umur, default=labels_umur)
-df = df[df[''].isin(selected_generations)]
 #Filter Job Family
 labels_fmly = ['L', 'P']
 selected_jobfam = st.sidebar.multiselect('Jenis Kelamin', labels_fmly, default=labels_fmly)
