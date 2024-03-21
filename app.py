@@ -71,7 +71,7 @@ gen_counts = df['Generasi'].value_counts()
 
 plt.figure(figsize=(10, 8))
 sns.set(style="whitegrid")
-plt.pie(gen_counts, labels = gen_counts.index, startangle=140, colors=colors, autopct='%1.1f%%')
+plt.pie(gen_counts, labels = gen_counts.index, startangle=140, colors=colors, autopct=lambda pct: func(pct, distribusi))
 plt.show()
 st.pyplot(plt)
 
