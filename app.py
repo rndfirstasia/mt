@@ -19,11 +19,17 @@ df = conn.read(spreadsheet=url, worksheet="0")
 #Sidebar
 st.sidebar.title('Filter')
 
-#Filter Job Family
+bins= [0,6,29,44,64,80, np.inf]
+labels_umur = ['Gen Alpha', 'Gen Z', 'Milenials', 'Gen X', 'Baby Boomer', 'Silent']
+df['Generasi'] = pd.cut(df['UMUR'], bins=bins, labels=labels_umur, right=False)
+
+selected_generations = st.sidebar.multiselect('Pilih Generasi', labels_umur, default=labels_umur)
+df = df[df['Generasi'].isin(selected_generations)]
+
 labels_fmly = ['L', 'P']
 selected_jobfam = st.sidebar.multiselect('Jenis Kelamin', labels_fmly, default=labels_fmly)
 df = df[df['J/K'].isin(selected_jobfam)]
-#Filter
+
 labels_mng = ['DANAMON', 'PT. Bela Parahiyangan Investindo', 'PT. Mitra Akademi Perkasa (MAP Group)', 'PT. Quadra Dinamika Internasional', 'PT. Satya Djaya Raya Trading Coy', 'PT. Satya Langgeng Sentosa', 'Solusi Bangun Indonesia, PT.']
 selected_managerial = st.sidebar.multiselect('Klien', labels_mng, default=labels_mng)
 df = df[df['KLIEN'].isin(selected_managerial)]
@@ -42,7 +48,31 @@ plt.figure(figsize=(10, 6))
 plt.pie(distribusi, labels=distribusi.index, colors=colors, autopct=lambda pct: func(pct, distribusi), startangle=140)
 
 plt.rcParams.update({'font.size': 12})
+st.pyplot(plt)
 
+st.subheader('Generasi')
+def klasifikasi_generasi(umur):
+    if umur <= 6:
+        return 'Gen Alpha'
+    elif 7 <= umur <= 25:
+        return 'Gen Z'
+    elif 26 <= umur <= 41:
+        return 'Millennials'
+    elif 42 <= umur <= 57:
+        return 'Gen X'
+    elif 58 <= umur <= 76:
+        return 'Baby Boomers'
+    else:
+        return 'Silent'
+    
+df['Generasi'] = df['UMUR'].apply(klasifikasi_generasi)
+
+gen_counts = df['Generasi'].value_counts()
+
+plt.figure(figsize=(10, 8))
+sns.set(style="whitegrid")
+plt.pie(gen_counts, labels = gen_counts.index, startangle=140)
+plt.show()
 st.pyplot(plt)
 
 st.subheader('STAGE Distribution')
